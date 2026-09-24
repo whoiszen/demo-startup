@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>StudyFit AI | MVP Prototype</title>
+  <title>StudyFit AI | Student Wellness Platform</title>
   <style>
     :root {
       --ink: #172033;
@@ -202,8 +202,8 @@
     .phone-head .mini { color: rgba(255,255,255,.8); font-size: .8rem; margin: 0; }
     .phone-head strong { display: block; font-size: 1.35rem; line-height: 1.15; margin-top: .3rem; }
     .phone-body { padding: 14px; display: grid; gap: 10px; }
-    .mock-card { padding: 13px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
-    .mock-card b { display: block; font-size: .9rem; }
+    .app-card { padding: 13px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
+    .app-card b { display: block; font-size: .9rem; }
     .meter { height: 8px; border-radius: 999px; background: #e8eef7; overflow: hidden; margin-top: 10px; }
     .meter span { display: block; height: 100%; border-radius: inherit; background: var(--brand); }
     .mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -595,17 +595,17 @@
     <section class="hero">
       <div class="container hero-grid">
         <div class="hero-copy">
-          <div class="eyebrow">MVP prototype for student wellness</div>
+          <div class="eyebrow">Student wellness, planned intelligently</div>
           <h1>Study plans, workouts, and meals in one calm dashboard.</h1>
-          <p>StudyFit AI is a mock startup product for students who want better focus, better routines, and a simple way to see progress without opening five different apps.</p>
+          <p>StudyFit AI helps students build stronger focus, better routines, and a simple way to see progress without opening five different apps.</p>
           <div class="hero-actions">
-            <button class="btn primary" data-open-login>Start mock demo</button>
+            <button class="btn primary" data-open-login>Get started</button>
             <button class="btn ghost" data-go="features">Explore features</button>
           </div>
           <div class="trust-row">
-            <span class="tag live">No real account needed</span>
-            <span class="tag live">Prefilled sign in</span>
-            <span class="tag soon">MVP navigation only</span>
+            <span class="tag live">Personal study plans</span>
+            <span class="tag live">Smart routine builder</span>
+            <span class="tag soon">More tools arriving soon</span>
           </div>
         </div>
 
@@ -623,20 +623,20 @@
                 <strong>3 focus blocks and push day are ready.</strong>
               </div>
               <div class="phone-body">
-                <div class="mock-card">
+                <div class="app-card">
                   <b>Today score</b>
                   <p>Study 74%, training 60%, meals 82%</p>
                   <div class="meter"><span style="width:74%"></span></div>
                 </div>
                 <div class="mini-grid">
-                  <div class="mock-card"><b>Focus</b><p>25 min sprint</p></div>
-                  <div class="mock-card"><b>Workout</b><p>Push day</p></div>
+                  <div class="app-card"><b>Focus</b><p>25 min sprint</p></div>
+                  <div class="app-card"><b>Workout</b><p>Push day</p></div>
                 </div>
-                <div class="mock-card">
+                <div class="app-card">
                   <b>AI coach note</b>
                   <p>Move biology review before your workout while focus is strongest.</p>
                 </div>
-                <div class="mock-card">
+                <div class="app-card">
                   <b>Meal idea</b>
                   <p>Chicken rice bowl, banana, yogurt, and water target.</p>
                 </div>
@@ -651,12 +651,12 @@
       <div class="container">
         <div class="section-head">
           <span class="tag live">Feature map</span>
-          <h2>Built like a real product, scoped like an MVP.</h2>
-          <p>Core screens are clickable. Advanced coaching tools are shown as coming soon so the prototype communicates the roadmap clearly.</p>
+          <h2>Built for the daily routine students actually live.</h2>
+          <p>Start with essential planning tools today, then grow into deeper coaching features as your routine becomes more consistent.</p>
         </div>
         <div class="feature-grid">
           <article class="feature-card">
-            <div><div class="icon">AI</div><h3>AI Study Tutor</h3><p>Prefilled coach chat with suggested study plans and progress prompts.</p></div>
+            <div><div class="icon">AI</div><h3>AI Study Tutor</h3><p>Coach chat with suggested study plans and progress prompts.</p></div>
             <span class="tag live">Available now</span>
           </article>
           <article class="feature-card">
@@ -672,7 +672,7 @@
             <span class="tag soon">Available soon</span>
           </article>
           <article class="feature-card">
-            <div><div class="icon">FR</div><h3>Form Review</h3><p>Mock camera-based gym feedback and exercise corrections.</p></div>
+            <div><div class="icon">FR</div><h3>Form Review</h3><p>Camera-based gym feedback and exercise corrections.</p></div>
             <span class="tag soon">Available soon</span>
           </article>
           <article class="feature-card">
@@ -686,9 +686,9 @@
     <section class="section" id="pricing">
       <div class="container">
         <div class="section-head">
-          <span class="tag live">Mock pricing</span>
-          <h2>Simple plans for the demo.</h2>
-          <p>Buttons navigate inside the mockup only. No real checkout or payment is processed.</p>
+          <span class="tag live">Pricing</span>
+          <h2>Simple plans for every routine.</h2>
+          <p>Choose the level of coaching that fits your study, training, and nutrition goals.</p>
         </div>
         <div class="pricing-row">
           <article class="price-card">
@@ -730,7 +730,7 @@
   </main>
 
   <main id="loginScreen" class="login-screen hidden">
-    <section class="login-card" aria-label="Prefilled sign in page">
+    <section class="login-card" aria-label="Sign in page">
       <div class="login-art">
         <div class="brand">
           <span class="mark">SF</span>
@@ -738,20 +738,20 @@
         </div>
         <div>
           <h2>Welcome back, Alex.</h2>
-          <p>This page is prefilled for prototype navigation. Continue to see the student dashboard.</p>
+          <p>Continue to your dashboard and pick up where you left off.</p>
         </div>
       </div>
       <form class="login-form" id="loginForm">
-        <span class="tag live">Demo credentials filled</span>
+        <span class="tag live">Welcome back</span>
         <h2>Sign in</h2>
-        <p>Use the already-filled fields to continue through the MVP mockup.</p>
+        <p>Your saved account details are ready so you can continue quickly.</p>
         <div class="field">
           <label for="email">Email address</label>
           <input id="email" type="email" value="alex.student@studyfit.ai" autocomplete="email">
         </div>
         <div class="field">
           <label for="password">Password</label>
-          <input id="password" type="password" value="studyfit-demo" autocomplete="current-password">
+          <input id="password" type="password" value="studyfit-secure" autocomplete="current-password">
         </div>
         <div class="helper-row">
           <span>Remember me: on</span>
@@ -775,8 +775,8 @@
         <p class="side-title">Workspace</p>
         <button class="side-link active" data-view-button="dashboard"><span>Dashboard</span><small>Live</small></button>
         <button class="side-link" data-view-button="featuresApp"><span>Features</span><small>Roadmap</small></button>
-        <button class="side-link" data-view-button="pricingApp"><span>Pricing</span><small>Demo</small></button>
-        <button class="side-link" data-view-button="profile"><span>Profile</span><small>Mock</small></button>
+        <button class="side-link" data-view-button="pricingApp"><span>Pricing</span><small>Plans</small></button>
+        <button class="side-link" data-view-button="profile"><span>Profile</span><small>Account</small></button>
       </nav>
 
       <nav class="side-section" aria-label="Feature shortcuts">
@@ -799,8 +799,8 @@
         <div class="app-header-inner">
           <button class="btn menu-btn slim" id="menuBtn">Menu</button>
           <div>
-            <strong>StudyFit AI prototype</strong>
-            <p style="margin:0;font-size:.9rem">All data is mock data for navigation only.</p>
+            <strong>StudyFit AI</strong>
+            <p style="margin:0;font-size:.9rem">Your study, training, and nutrition workspace.</p>
           </div>
           <div class="user-chip">
             <span>Alex Rivera</span>
@@ -813,11 +813,11 @@
         <section class="view active" id="dashboard">
           <div class="view-head">
             <div>
-              <span class="tag live" id="planBadge">Free MVP Preview</span>
+              <span class="tag live" id="planBadge">Free Plan</span>
               <h2>Today is already planned.</h2>
               <p>Your study, workout, and meal tasks are arranged into a simple schedule for the day.</p>
             </div>
-            <button class="btn primary" data-toast="AI generated a fresh mock plan for today.">Regenerate plan</button>
+            <button class="btn primary" data-toast="AI generated a fresh plan for today.">Regenerate plan</button>
           </div>
 
           <div class="stat-grid">
@@ -830,7 +830,7 @@
           <div class="dash-grid">
             <article class="panel">
               <h3>Today checklist</h3>
-              <p>Tap the prototype controls to preview how the MVP would respond.</p>
+              <p>Use these controls to adjust today's schedule and keep the routine realistic.</p>
               <div class="plan-list">
                 <div class="plan-item"><span class="check">OK</span><div><b>Biology review</b><p>25-minute active recall session.</p></div><span class="tag live">Done</span></div>
                 <div class="plan-item"><span class="check">2</span><div><b>Math problem set</b><p>45 minutes after lunch.</p></div><span class="tag">Next</span></div>
@@ -845,8 +845,8 @@
               <div class="bubble user">Can you make the evening easier?</div>
               <div class="bubble">Yes. Move flashcards to tomorrow and keep tonight to dinner plus stretching.</div>
               <div class="input-row">
-                <input value="Create a lighter plan" aria-label="Mock AI prompt">
-                <button class="btn primary" data-toast="Mock AI response added to the plan.">Send</button>
+                <input value="Create a lighter plan" aria-label="AI coach prompt">
+                <button class="btn primary" data-toast="AI response added to the plan.">Send</button>
               </div>
             </aside>
           </div>
@@ -856,8 +856,8 @@
           <div class="view-head">
             <div>
               <span class="tag live">Features</span>
-              <h2>Current MVP and coming soon modules.</h2>
-              <p>Each card is wired for prototype feedback so navigation does not break.</p>
+              <h2>Current tools and upcoming modules.</h2>
+              <p>Open available tools now, or see what is arriving soon for deeper coaching.</p>
             </div>
           </div>
           <div class="feature-workbench">
@@ -874,8 +874,8 @@
           <div class="view-head">
             <div>
               <span class="tag live">Pricing</span>
-              <h2>Mock subscription screen.</h2>
-              <p>These actions update the prototype state only.</p>
+              <h2>Choose your subscription.</h2>
+              <p>Upgrade when you are ready for more coaching, planning, and insights.</p>
             </div>
           </div>
           <div class="pricing-row">
@@ -883,7 +883,7 @@
               <span class="tag">Free</span>
               <div class="price">PHP 0 <small>/ mo</small></div>
               <ul class="list"><li>Dashboard</li><li>Limited AI tutor</li><li>Basic meals</li></ul>
-              <button class="btn full" data-toast="You are viewing the Free mock plan.">Current plan</button>
+              <button class="btn full" data-toast="You are viewing the Free plan.">Current plan</button>
             </article>
             <article class="price-card highlight">
               <span class="tag live">Pro</span>
@@ -905,20 +905,20 @@
             <div>
               <span class="tag live">AI Study Tutor</span>
               <h2>Preview a guided study session.</h2>
-              <p>This mock tutor shows how a student could ask for explanations, review plans, and lighter schedules.</p>
+              <p>Ask for explanations, review plans, and lighter schedules when your week gets busy.</p>
             </div>
             <button class="btn" data-view-button="featuresApp">Back to features</button>
           </div>
           <div class="preview-grid">
             <article class="panel coach">
-              <h3>Demo chat</h3>
+              <h3>Study chat</h3>
               <div class="bubble user">Make me a 3-day biology review plan.</div>
               <div class="bubble">Day 1: cell structure and active recall. Day 2: genetics practice. Day 3: timed quiz plus error review.</div>
               <div class="bubble user">Can you make it less stressful?</div>
               <div class="bubble">Yes. Keep each block to 25 minutes and put the hardest topic first while your focus is fresh.</div>
               <div class="input-row">
-                <input value="Explain mitosis simply" aria-label="Study tutor demo prompt">
-                <button class="btn primary" data-toast="Study Tutor generated a mock explanation.">Ask tutor</button>
+                <input value="Explain mitosis simply" aria-label="Study tutor prompt">
+                <button class="btn primary" data-toast="Study Tutor generated an explanation.">Ask tutor</button>
               </div>
             </article>
             <aside class="panel">
@@ -952,7 +952,7 @@
             </article>
             <aside class="panel">
               <h3>Coach note</h3>
-              <p>Your hardest study day is Thursday, so the mock planner keeps that as a recovery day.</p>
+              <p>Your hardest study day is Thursday, so the planner keeps that as a recovery day.</p>
               <button class="btn primary full" data-toast="Workout Planner generated a lighter exam-week split.">Generate exam-week split</button>
             </aside>
           </div>
@@ -990,7 +990,7 @@
             <div>
               <span class="tag live">Payment section</span>
               <h2 id="checkoutTitle">Subscribe to StudyFit Pro.</h2>
-              <p>All fields are prefilled for prototype navigation. No real payment is processed.</p>
+              <p>Review your plan and complete your subscription securely.</p>
             </div>
             <button class="btn" data-view-button="pricingApp">Back to pricing</button>
           </div>
@@ -1000,9 +1000,9 @@
               <div class="price" id="checkoutPrice">PHP 199 <small>/ mo</small></div>
               <p id="checkoutSummary">Unlimited AI coaching, workout planning, and advanced meal plans.</p>
               <div class="preview-list">
-                <div class="preview-row"><b>Billing date</b><p>Today, mock payment only</p></div>
+                <div class="preview-row"><b>Billing date</b><p>Today</p></div>
                 <div class="preview-row"><b>Account</b><p>alex.student@studyfit.ai</p></div>
-                <div class="preview-row"><b>Status after payment</b><p>Subscribed and unlocked inside this prototype</p></div>
+                <div class="preview-row"><b>Status after payment</b><p>Subscribed and unlocked instantly</p></div>
               </div>
             </article>
             <form class="panel" id="paymentForm">
@@ -1028,7 +1028,7 @@
             <div>
               <span class="tag live">Profile</span>
               <h2>Alex Rivera</h2>
-              <p>Mock student account with prefilled settings and recent activity.</p>
+              <p>Your student account, saved settings, and recent activity.</p>
             </div>
             <button class="btn" data-toast="Profile editing is coming soon.">Edit profile</button>
           </div>
@@ -1037,7 +1037,7 @@
               <h3>Account</h3>
               <p><b>Email:</b> alex.student@studyfit.ai</p>
               <p><b>Goal:</b> Improve grades while building a consistent gym routine.</p>
-              <p><b>Plan:</b> <span id="profilePlan">Free MVP Preview</span></p>
+              <p><b>Plan:</b> <span id="profilePlan">Free Plan</span></p>
               <button class="btn primary full" data-view-button="pricingApp">View plan options</button>
             </article>
             <article class="panel">
@@ -1055,8 +1055,8 @@
   </main>
 
   <div class="toast" id="toast" role="status" aria-live="polite">
-    <b>Prototype action</b>
-    <p id="toastText">This control is wired for mock navigation.</p>
+    <b>StudyFit update</b>
+    <p id="toastText">Your account has been updated.</p>
   </div>
 
   <script>
@@ -1076,7 +1076,7 @@
     const paymentForm = document.getElementById("paymentForm");
     const planDetails = {
       free: {
-        name: "Free MVP Preview",
+        name: "Free Plan",
         price: "PHP 0",
         summary: "Core dashboard, limited AI tutor messages, and basic meal ideas."
       },
@@ -1102,7 +1102,7 @@
     }
 
     function showToast(message) {
-      toastText.textContent = message || "This is a mock prototype action.";
+      toastText.textContent = message || "Your account has been updated.";
       toast.classList.add("show");
       clearTimeout(toastTimer);
       toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
@@ -1159,7 +1159,7 @@
       checkoutSummary.textContent = plan.summary;
       payButton.textContent = `Pay ${plan.price} and subscribe`;
       switchView("checkout");
-      showToast(`${plan.name} checkout is ready with prefilled demo payment details.`);
+      showToast(`${plan.name} checkout is ready with your saved payment details.`);
     }
 
     document.querySelectorAll("[data-open-login]").forEach(btn => {
@@ -1181,7 +1181,7 @@
       event.preventDefault();
       showOnly(appScreen);
       switchView("dashboard");
-      showToast("Signed in with prefilled demo credentials.");
+      showToast("Signed in successfully. Welcome back.");
     });
 
     document.getElementById("menuBtn").addEventListener("click", () => {
