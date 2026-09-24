@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>StudyFit AI | MVP Prototype</title>
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #667085;
+      --soft: #f4f7fb;
+      --panel: #ffffff;
+      --line: #dce3ee;
+      --brand: #2457d6;
+      --brand-dark: #173b95;
+      --mint: #16a37b;
+      --coral: #f36f45;
+      --violet: #7256d9;
+      --shadow: 0 18px 45px rgba(28, 44, 77, .12);
+      --radius: 8px;
+      color-scheme: light;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 10%, rgba(36, 87, 214, .12), transparent 26rem),
+        radial-gradient(circle at 88% 0%, rgba(22, 163, 123, .11), transparent 22rem),
+        var(--soft);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    img { max-width: 100%; display: block; }
+    button, input { font: inherit; }
+    button { cursor: pointer; border: 0; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2 { letter-spacing: 0; line-height: 1.05; }
+    h1 { font-size: clamp(2.45rem, 8vw, 5.25rem); margin-bottom: 1rem; }
+    h2 { font-size: clamp(1.8rem, 4vw, 3rem); margin-bottom: .65rem; }
+    h3 { font-size: 1.05rem; margin-bottom: .45rem; }
+    p { color: var(--muted); }
+
+    .screen { min-height: 100vh; }
+    .hidden { display: none !important; }
+    .container { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: .65rem;
+      font-weight: 850;
+      letter-spacing: 0;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+    .mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, var(--brand), var(--mint));
+      color: #fff;
+      box-shadow: 0 12px 22px rgba(36, 87, 214, .2);
+      font-weight: 900;
+    }
+    .brand small { color: var(--brand); font-size: inherit; }
+
+    .btn {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .45rem;
+      padding: .72rem 1rem;
+      border-radius: var(--radius);
+      font-weight: 800;
+      color: var(--ink);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+      text-decoration: none;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(28, 44, 77, .12); }
+    .btn.primary { color: #fff; background: var(--brand); border-color: var(--brand); }
+    .btn.primary:hover { background: var(--brand-dark); border-color: var(--brand-dark); }
+    .btn.ghost { background: rgba(255,255,255,.72); backdrop-filter: blur(10px); }
+    .btn.slim { min-height: 36px; padding: .5rem .75rem; font-size: .9rem; }
+    .btn.full { width: 100%; }
+    .btn[disabled] { cursor: not-allowed; opacity: .62; transform: none; box-shadow: none; }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      padding: .35rem .62rem;
+      border-radius: 999px;
+      color: #234;
+      background: #eef4ff;
+      border: 1px solid #d9e6ff;
+      font-size: .78rem;
+      font-weight: 800;
+    }
+    .tag.soon { color: #6b3f00; background: #fff5dc; border-color: #f8df9b; }
+    .tag.live { color: #065f46; background: #def8ee; border-color: #b5edd9; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(244, 247, 251, .78);
+      border-bottom: 1px solid rgba(220, 227, 238, .8);
+    }
+    .topbar .container {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .top-actions { display: flex; gap: .65rem; align-items: center; }
+
+    .hero {
+      min-height: calc(100vh - 72px);
+      display: grid;
+      align-items: center;
+      padding: 34px 0 28px;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(310px, .95fr);
+      gap: clamp(1.2rem, 4vw, 3rem);
+      align-items: center;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .38rem .65rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.72);
+      color: var(--brand-dark);
+      font-weight: 850;
+      font-size: .82rem;
+      margin-bottom: 1rem;
+    }
+    .hero-copy p {
+      max-width: 620px;
+      font-size: clamp(1rem, 2vw, 1.18rem);
+      margin-bottom: 1.35rem;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-bottom: 1rem; }
+    .trust-row { display: flex; flex-wrap: wrap; gap: .55rem; }
+
+    .phone-stage {
+      position: relative;
+      min-height: 620px;
+      display: grid;
+      place-items: center;
+    }
+    .media-tile {
+      position: absolute;
+      overflow: hidden;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.7);
+      box-shadow: var(--shadow);
+      background: #ddd;
+      animation: floaty 8s ease-in-out infinite;
+    }
+    .media-tile.study { width: 48%; left: 0; top: 7%; animation-delay: -.5s; }
+    .media-tile.workout { width: 42%; right: 2%; bottom: 10%; animation-delay: -2s; }
+    .media-tile img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4 / 3; }
+    .phone {
+      position: relative;
+      z-index: 2;
+      width: min(330px, 78vw);
+      border-radius: 28px;
+      padding: 12px;
+      background: #101828;
+      box-shadow: 0 35px 80px rgba(16, 24, 40, .28);
+      animation: riseIn .65s ease both;
+    }
+    .phone-inner {
+      min-height: 560px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #f8fafc;
+      border: 1px solid #26344f;
+    }
+    .phone-head {
+      padding: 18px 18px 12px;
+      color: #fff;
+      background: linear-gradient(145deg, #2457d6, #16a37b);
+    }
+    .phone-head .mini { color: rgba(255,255,255,.8); font-size: .8rem; margin: 0; }
+    .phone-head strong { display: block; font-size: 1.35rem; line-height: 1.15; margin-top: .3rem; }
+    .phone-body { padding: 14px; display: grid; gap: 10px; }
+    .mock-card { padding: 13px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
+    .mock-card b { display: block; font-size: .9rem; }
+    .meter { height: 8px; border-radius: 999px; background: #e8eef7; overflow: hidden; margin-top: 10px; }
+    .meter span { display: block; height: 100%; border-radius: inherit; background: var(--brand); }
+    .mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(18px) scale(.98); }
+      to { opacity: 1; transform: none; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    .section { padding: 70px 0; }
+    .section-head { max-width: 680px; margin-bottom: 1.4rem; }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .feature-card, .price-card, .panel {
+      background: rgba(255,255,255,.86);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 28px rgba(28,44,77,.07);
+    }
+    .feature-card {
+      min-height: 180px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+    .feature-card:hover { transform: translateY(-4px); border-color: #b8c8e2; box-shadow: var(--shadow); }
+    .feature-card p { margin-bottom: 1rem; font-size: .95rem; }
+    .icon {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius);
+      background: #eef4ff;
+      color: var(--brand);
+      font-weight: 950;
+      margin-bottom: .85rem;
+    }
+
+    .pricing-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .price-card { padding: 20px; display: flex; flex-direction: column; }
+    .price-card.highlight { border-color: rgba(243,111,69,.55); box-shadow: 0 20px 45px rgba(243,111,69,.13); }
+    .price { font-size: 2.25rem; font-weight: 900; letter-spacing: 0; margin: .4rem 0 .1rem; }
+    .price small { font-size: .9rem; color: var(--muted); font-weight: 700; }
+    .list { padding: 0; margin: 1rem 0 1.2rem; list-style: none; color: var(--muted); }
+    .list li { padding: .35rem 0; }
+    .list li:before { content: "OK"; color: var(--mint); font-weight: 900; margin-right: .45rem; font-size: .72rem; }
+    .price-card .btn { margin-top: auto; }
+
+    .login-screen {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+    .login-card {
+      width: min(980px, 100%);
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      overflow: hidden;
+      border-radius: 14px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      animation: fadeIn .28s ease both;
+    }
+    .login-art {
+      min-height: 560px;
+      padding: 28px;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background:
+        linear-gradient(180deg, rgba(16,24,40,.14), rgba(16,24,40,.72)),
+        url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1100&q=80") center/cover;
+    }
+    .login-art p { color: rgba(255,255,255,.86); max-width: 360px; }
+    .login-art .brand { color: #fff; }
+    .login-form { padding: clamp(24px, 6vw, 56px); }
+    .field { margin-bottom: 14px; }
+    .field label { display: block; font-size: .82rem; color: #475467; font-weight: 800; margin-bottom: .35rem; }
+    .field input {
+      width: 100%;
+      min-height: 46px;
+      padding: .72rem .85rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: #f8fafc;
+      color: var(--ink);
+      outline: none;
+      transition: border-color .18s ease, box-shadow .18s ease;
+    }
+    .field input:focus { border-color: var(--brand); box-shadow: 0 0 0 4px rgba(36,87,214,.12); }
+    .helper-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin: 10px 0 18px; color: var(--muted); font-size: .9rem; }
+
+    .app-shell { min-height: 100vh; display: grid; grid-template-columns: 260px minmax(0, 1fr); }
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 18px 14px;
+      background: rgba(255,255,255,.92);
+      border-right: 1px solid var(--line);
+      backdrop-filter: blur(18px);
+      overflow-y: auto;
+      z-index: 40;
+    }
+    .side-section { margin-top: 22px; }
+    .side-title {
+      margin: 0 8px 7px;
+      color: #7a8495;
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-weight: 900;
+    }
+    .side-link {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .6rem;
+      min-height: 42px;
+      margin: 2px 0;
+      padding: .62rem .7rem;
+      border-radius: var(--radius);
+      color: #344054;
+      background: transparent;
+      text-align: left;
+      font-weight: 800;
+      transition: background .18s ease, color .18s ease, transform .18s ease;
+    }
+    .side-link:hover { background: #eef4ff; color: var(--brand-dark); transform: translateX(2px); }
+    .side-link.active { color: #fff; background: var(--brand); }
+    .side-link small { color: inherit; opacity: .72; font-weight: 900; font-size: .7rem; }
+    .side-footer { margin-top: 24px; display: grid; gap: 8px; }
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      background: rgba(16,24,40,.42);
+      display: none;
+    }
+    .overlay.show { display: block; }
+
+    .app-main { min-width: 0; }
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 25;
+      background: rgba(244,247,251,.86);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line);
+    }
+    .app-header-inner {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0 24px;
+    }
+    .menu-btn { display: none; }
+    .user-chip { display: flex; align-items: center; gap: .65rem; font-weight: 850; }
+    .avatar {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      background: linear-gradient(135deg, var(--coral), var(--violet));
+      font-weight: 950;
+    }
+    .app-content { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 60px; }
+    .view { display: none; animation: fadeIn .22s ease both; }
+    .view.active { display: block; }
+    .view-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 18px;
+    }
+    .view-head p { max-width: 640px; margin-bottom: 0; }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .panel { padding: 18px; }
+    .stat strong { display: block; font-size: 2rem; line-height: 1.1; letter-spacing: 0; }
+    .stat span { color: var(--muted); font-weight: 750; font-size: .9rem; }
+    .dash-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(290px, .6fr);
+      gap: 14px;
+      align-items: start;
+    }
+    .plan-list { display: grid; gap: 10px; margin-top: 12px; }
+    .plan-item {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfdff;
+    }
+    .check {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--mint);
+      font-weight: 950;
+    }
+    .plan-item p { margin: 0; font-size: .9rem; }
+    .coach { display: grid; gap: 10px; }
+    .bubble { padding: 12px; border-radius: var(--radius); background: #eef4ff; color: #24324b; }
+    .bubble.user { margin-left: 38px; background: #eaf8f3; }
+    .input-row { display: flex; gap: 8px; }
+    .input-row input {
+      min-width: 0;
+      flex: 1;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: .7rem .8rem;
+    }
+    .feature-workbench {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .feature-workbench .feature-card { min-height: 220px; }
+    .profile-grid {
+      display: grid;
+      grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+      gap: 14px;
+    }
+    .preview-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr);
+      gap: 14px;
+      align-items: start;
+    }
+    .preview-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .preview-row {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfdff;
+    }
+    .preview-row p { margin-bottom: 0; }
+    .payment-grid {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+      gap: 14px;
+      align-items: start;
+    }
+    .payment-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 46px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfdff;
+      font-weight: 800;
+      color: #344054;
+    }
+    .payment-option input { accent-color: var(--brand); }
+    .timeline { display: grid; gap: 12px; }
+    .timeline-item { padding-left: 16px; border-left: 3px solid var(--brand); }
+    .timeline-item p { margin-bottom: 0; }
+
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 90;
+      width: min(360px, calc(100% - 36px));
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: var(--shadow);
+      transform: translateY(18px);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform .2s ease, opacity .2s ease;
+    }
+    .toast.show { transform: none; opacity: 1; }
+    .toast b { display: block; margin-bottom: 2px; }
+    .toast p { margin: 0; font-size: .9rem; }
+
+    @media (max-width: 980px) {
+      .hero-grid, .dash-grid, .profile-grid, .preview-grid, .payment-grid { grid-template-columns: 1fr; }
+      .phone-stage { min-height: 560px; }
+      .feature-grid, .feature-workbench, .pricing-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .app-shell { grid-template-columns: 1fr; }
+      .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: min(310px, 86vw);
+        transform: translateX(-104%);
+        transition: transform .22s ease;
+        box-shadow: var(--shadow);
+      }
+      .sidebar.open { transform: translateX(0); }
+      .menu-btn { display: inline-flex; }
+    }
+
+    @media (max-width: 720px) {
+      .topbar .container { min-height: 64px; }
+      .top-actions .hide-mobile { display: none; }
+      .hero { min-height: auto; padding-top: 34px; }
+      .phone-stage { min-height: auto; padding: 16px 0 8px; }
+      .media-tile { display: none; }
+      .phone { width: min(335px, 100%); }
+      .phone-inner { min-height: 500px; }
+      .feature-grid, .feature-workbench, .pricing-row, .stat-grid { grid-template-columns: 1fr; }
+      .section { padding: 48px 0; }
+      .login-card { grid-template-columns: 1fr; }
+      .login-art { min-height: 250px; }
+      .helper-row, .view-head { flex-direction: column; align-items: stretch; }
+      .app-header-inner { padding: 0 16px; }
+      .user-chip span { display: none; }
+      .input-row { flex-direction: column; }
+      .plan-item { grid-template-columns: auto 1fr; }
+      .plan-item .tag { grid-column: 2; justify-self: start; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *:before, *:after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main id="landingScreen" class="screen">
+    <header class="topbar">
+      <div class="container">
+        <div class="brand" aria-label="StudyFit AI">
+          <span class="mark">SF</span>
+          <span>Study<small>Fit</small> AI</span>
+        </div>
+        <div class="top-actions">
+          <button class="btn ghost slim hide-mobile" data-go="pricing">Pricing</button>
+          <button class="btn slim" data-go="features">Features</button>
+          <button class="btn primary slim" data-open-login>Sign in</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">MVP prototype for student wellness</div>
+          <h1>Study plans, workouts, and meals in one calm dashboard.</h1>
+          <p>StudyFit AI is a mock startup product for students who want better focus, better routines, and a simple way to see progress without opening five different apps.</p>
+          <div class="hero-actions">
+            <button class="btn primary" data-open-login>Start mock demo</button>
+            <button class="btn ghost" data-go="features">Explore features</button>
+          </div>
+          <div class="trust-row">
+            <span class="tag live">No real account needed</span>
+            <span class="tag live">Prefilled sign in</span>
+            <span class="tag soon">MVP navigation only</span>
+          </div>
+        </div>
+
+        <div class="phone-stage" aria-label="StudyFit mobile app preview">
+          <div class="media-tile study">
+            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80" alt="Students studying together">
+          </div>
+          <div class="media-tile workout">
+            <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80" alt="Workout equipment in a gym">
+          </div>
+          <div class="phone">
+            <div class="phone-inner">
+              <div class="phone-head">
+                <p class="mini">Good morning, Alex</p>
+                <strong>3 focus blocks and push day are ready.</strong>
+              </div>
+              <div class="phone-body">
+                <div class="mock-card">
+                  <b>Today score</b>
+                  <p>Study 74%, training 60%, meals 82%</p>
+                  <div class="meter"><span style="width:74%"></span></div>
+                </div>
+                <div class="mini-grid">
+                  <div class="mock-card"><b>Focus</b><p>25 min sprint</p></div>
+                  <div class="mock-card"><b>Workout</b><p>Push day</p></div>
+                </div>
+                <div class="mock-card">
+                  <b>AI coach note</b>
+                  <p>Move biology review before your workout while focus is strongest.</p>
+                </div>
+                <div class="mock-card">
+                  <b>Meal idea</b>
+                  <p>Chicken rice bowl, banana, yogurt, and water target.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-head">
+          <span class="tag live">Feature map</span>
+          <h2>Built like a real product, scoped like an MVP.</h2>
+          <p>Core screens are clickable. Advanced coaching tools are shown as coming soon so the prototype communicates the roadmap clearly.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div><div class="icon">AI</div><h3>AI Study Tutor</h3><p>Prefilled coach chat with suggested study plans and progress prompts.</p></div>
+            <span class="tag live">Available now</span>
+          </article>
+          <article class="feature-card">
+            <div><div class="icon">GY</div><h3>Workout Planner</h3><p>Simple weekly routines designed around study time and energy level.</p></div>
+            <span class="tag live">Available now</span>
+          </article>
+          <article class="feature-card">
+            <div><div class="icon">ME</div><h3>Meal Suggestions</h3><p>Budget-friendly ideas for focus, recovery, and consistency.</p></div>
+            <span class="tag live">Available now</span>
+          </article>
+          <article class="feature-card">
+            <div><div class="icon">PI</div><h3>Progress Insights</h3><p>Trend charts, weekly summaries, and focus window predictions.</p></div>
+            <span class="tag soon">Available soon</span>
+          </article>
+          <article class="feature-card">
+            <div><div class="icon">FR</div><h3>Form Review</h3><p>Mock camera-based gym feedback and exercise corrections.</p></div>
+            <span class="tag soon">Available soon</span>
+          </article>
+          <article class="feature-card">
+            <div><div class="icon">WR</div><h3>Weekly AI Review</h3><p>Personal recaps that combine academic, fitness, and nutrition habits.</p></div>
+            <span class="tag soon">Available soon</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="container">
+        <div class="section-head">
+          <span class="tag live">Mock pricing</span>
+          <h2>Simple plans for the demo.</h2>
+          <p>Buttons navigate inside the mockup only. No real checkout or payment is processed.</p>
+        </div>
+        <div class="pricing-row">
+          <article class="price-card">
+            <span class="tag">Free</span>
+            <div class="price">PHP 0 <small>/ mo</small></div>
+            <p>For trying the core dashboard.</p>
+            <ul class="list">
+              <li>5 AI tutor messages daily</li>
+              <li>Basic workout plan</li>
+              <li>Meal suggestions</li>
+            </ul>
+            <button class="btn full" data-open-login>Start free</button>
+          </article>
+          <article class="price-card highlight">
+            <span class="tag live">Pro</span>
+            <div class="price">PHP 199 <small>/ mo</small></div>
+            <p>For students building a routine.</p>
+            <ul class="list">
+              <li>Unlimited AI coaching</li>
+              <li>Advanced meal planning</li>
+              <li>Habit streaks</li>
+            </ul>
+            <button class="btn primary full" data-plan="pro">Preview Pro</button>
+          </article>
+          <article class="price-card">
+            <span class="tag soon">Premium</span>
+            <div class="price">PHP 399 <small>/ mo</small></div>
+            <p>For the future full version.</p>
+            <ul class="list">
+              <li>Progress insights</li>
+              <li>Weekly AI review</li>
+              <li>Form review tools</li>
+            </ul>
+            <button class="btn full" data-plan="premium">Preview Premium</button>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <main id="loginScreen" class="login-screen hidden">
+    <section class="login-card" aria-label="Prefilled sign in page">
+      <div class="login-art">
+        <div class="brand">
+          <span class="mark">SF</span>
+          <span>Study<small>Fit</small> AI</span>
+        </div>
+        <div>
+          <h2>Welcome back, Alex.</h2>
+          <p>This page is prefilled for prototype navigation. Continue to see the student dashboard.</p>
+        </div>
+      </div>
+      <form class="login-form" id="loginForm">
+        <span class="tag live">Demo credentials filled</span>
+        <h2>Sign in</h2>
+        <p>Use the already-filled fields to continue through the MVP mockup.</p>
+        <div class="field">
+          <label for="email">Email address</label>
+          <input id="email" type="email" value="alex.student@studyfit.ai" autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" type="password" value="studyfit-demo" autocomplete="current-password">
+        </div>
+        <div class="helper-row">
+          <span>Remember me: on</span>
+          <button class="btn slim" type="button" data-toast="Password reset is coming soon in the real app.">Forgot password</button>
+        </div>
+        <button class="btn primary full" type="submit">Continue to dashboard</button>
+        <button class="btn full" type="button" data-back-home>Back to home</button>
+      </form>
+    </section>
+  </main>
+
+  <main id="appScreen" class="app-shell hidden">
+    <div id="drawerOverlay" class="overlay"></div>
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <span class="mark">SF</span>
+        <span>Study<small>Fit</small></span>
+      </div>
+
+      <nav class="side-section" aria-label="Main navigation">
+        <p class="side-title">Workspace</p>
+        <button class="side-link active" data-view-button="dashboard"><span>Dashboard</span><small>Live</small></button>
+        <button class="side-link" data-view-button="featuresApp"><span>Features</span><small>Roadmap</small></button>
+        <button class="side-link" data-view-button="pricingApp"><span>Pricing</span><small>Demo</small></button>
+        <button class="side-link" data-view-button="profile"><span>Profile</span><small>Mock</small></button>
+      </nav>
+
+      <nav class="side-section" aria-label="Feature shortcuts">
+        <p class="side-title">Feature shortcuts</p>
+        <button class="side-link" data-open-feature="studyTutor"><span>AI Study Tutor</span><small>Open</small></button>
+        <button class="side-link" data-open-feature="workoutPlanner"><span>Workout Planner</span><small>Open</small></button>
+        <button class="side-link" data-open-feature="mealSuggestions"><span>Meal Suggestions</span><small>Open</small></button>
+        <button class="side-link" data-feature="Progress Insights"><span>Progress Insights</span><small>Soon</small></button>
+        <button class="side-link" data-feature="Weekly AI Review"><span>Weekly AI Review</span><small>Soon</small></button>
+      </nav>
+
+      <div class="side-footer">
+        <button class="btn full" data-back-home>Back to landing</button>
+        <button class="btn primary full" data-open-login>Switch account</button>
+      </div>
+    </aside>
+
+    <section class="app-main">
+      <header class="app-header">
+        <div class="app-header-inner">
+          <button class="btn menu-btn slim" id="menuBtn">Menu</button>
+          <div>
+            <strong>StudyFit AI prototype</strong>
+            <p style="margin:0;font-size:.9rem">All data is mock data for navigation only.</p>
+          </div>
+          <div class="user-chip">
+            <span>Alex Rivera</span>
+            <div class="avatar">AR</div>
+          </div>
+        </div>
+      </header>
+
+      <div class="app-content">
+        <section class="view active" id="dashboard">
+          <div class="view-head">
+            <div>
+              <span class="tag live" id="planBadge">Free MVP Preview</span>
+              <h2>Today is already planned.</h2>
+              <p>Your study, workout, and meal tasks are arranged into a simple schedule for the day.</p>
+            </div>
+            <button class="btn primary" data-toast="AI generated a fresh mock plan for today.">Regenerate plan</button>
+          </div>
+
+          <div class="stat-grid">
+            <article class="panel stat"><strong>3</strong><span>Focus blocks</span></article>
+            <article class="panel stat"><strong>74%</strong><span>Study progress</span></article>
+            <article class="panel stat"><strong>5</strong><span>Day streak</span></article>
+            <article class="panel stat"><strong>82%</strong><span>Meal target</span></article>
+          </div>
+
+          <div class="dash-grid">
+            <article class="panel">
+              <h3>Today checklist</h3>
+              <p>Tap the prototype controls to preview how the MVP would respond.</p>
+              <div class="plan-list">
+                <div class="plan-item"><span class="check">OK</span><div><b>Biology review</b><p>25-minute active recall session.</p></div><span class="tag live">Done</span></div>
+                <div class="plan-item"><span class="check">2</span><div><b>Math problem set</b><p>45 minutes after lunch.</p></div><span class="tag">Next</span></div>
+                <div class="plan-item"><span class="check">3</span><div><b>Push workout</b><p>Chest, shoulders, triceps. 45 minutes.</p></div><span class="tag">6 PM</span></div>
+                <div class="plan-item"><span class="check">4</span><div><b>High-protein dinner</b><p>Rice bowl with chicken and vegetables.</p></div><span class="tag">Meal</span></div>
+              </div>
+            </article>
+
+            <aside class="panel coach">
+              <h3>AI coach</h3>
+              <div class="bubble">You are ahead in biology. Keep math lighter today and protect the workout slot.</div>
+              <div class="bubble user">Can you make the evening easier?</div>
+              <div class="bubble">Yes. Move flashcards to tomorrow and keep tonight to dinner plus stretching.</div>
+              <div class="input-row">
+                <input value="Create a lighter plan" aria-label="Mock AI prompt">
+                <button class="btn primary" data-toast="Mock AI response added to the plan.">Send</button>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="view" id="featuresApp">
+          <div class="view-head">
+            <div>
+              <span class="tag live">Features</span>
+              <h2>Current MVP and coming soon modules.</h2>
+              <p>Each card is wired for prototype feedback so navigation does not break.</p>
+            </div>
+          </div>
+          <div class="feature-workbench">
+            <article class="feature-card"><div><div class="icon">AI</div><h3>AI Study Tutor</h3><p>Ask for explanations, schedules, and review prompts.</p></div><button class="btn full" data-open-feature="studyTutor">Open preview</button></article>
+            <article class="feature-card"><div><div class="icon">GY</div><h3>Workout Planner</h3><p>Get a simple plan that fits around exams and energy.</p></div><button class="btn full" data-open-feature="workoutPlanner">Open preview</button></article>
+            <article class="feature-card"><div><div class="icon">ME</div><h3>Meal Suggestions</h3><p>See easy meals for focus and recovery.</p></div><button class="btn full" data-open-feature="mealSuggestions">Open preview</button></article>
+            <article class="feature-card"><div><div class="icon">PI</div><h3>Progress Insights</h3><p>Trend charts and focus predictions are planned for the next build.</p></div><button class="btn full" data-toast="Progress Insights is available soon.">Coming soon</button></article>
+            <article class="feature-card"><div><div class="icon">FR</div><h3>Form Review</h3><p>Camera-based workout feedback is shown as a future feature.</p></div><button class="btn full" data-toast="Form Review is on the roadmap.">Coming soon</button></article>
+            <article class="feature-card"><div><div class="icon">WR</div><h3>Weekly AI Review</h3><p>Combined study, training, and meal recap.</p></div><button class="btn full" data-toast="Weekly AI Review is coming soon.">Coming soon</button></article>
+          </div>
+        </section>
+
+        <section class="view" id="pricingApp">
+          <div class="view-head">
+            <div>
+              <span class="tag live">Pricing</span>
+              <h2>Mock subscription screen.</h2>
+              <p>These actions update the prototype state only.</p>
+            </div>
+          </div>
+          <div class="pricing-row">
+            <article class="price-card">
+              <span class="tag">Free</span>
+              <div class="price">PHP 0 <small>/ mo</small></div>
+              <ul class="list"><li>Dashboard</li><li>Limited AI tutor</li><li>Basic meals</li></ul>
+              <button class="btn full" data-toast="You are viewing the Free mock plan.">Current plan</button>
+            </article>
+            <article class="price-card highlight">
+              <span class="tag live">Pro</span>
+              <div class="price">PHP 199 <small>/ mo</small></div>
+              <ul class="list"><li>Unlimited AI</li><li>Workout planner</li><li>Advanced meals</li></ul>
+              <button class="btn primary full" data-plan="pro">Preview Pro</button>
+            </article>
+            <article class="price-card">
+              <span class="tag soon">Premium</span>
+              <div class="price">PHP 399 <small>/ mo</small></div>
+              <ul class="list"><li>Insights</li><li>Weekly review</li><li>Form review</li></ul>
+              <button class="btn full" data-plan="premium">Preview Premium</button>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="studyTutor">
+          <div class="view-head">
+            <div>
+              <span class="tag live">AI Study Tutor</span>
+              <h2>Preview a guided study session.</h2>
+              <p>This mock tutor shows how a student could ask for explanations, review plans, and lighter schedules.</p>
+            </div>
+            <button class="btn" data-view-button="featuresApp">Back to features</button>
+          </div>
+          <div class="preview-grid">
+            <article class="panel coach">
+              <h3>Demo chat</h3>
+              <div class="bubble user">Make me a 3-day biology review plan.</div>
+              <div class="bubble">Day 1: cell structure and active recall. Day 2: genetics practice. Day 3: timed quiz plus error review.</div>
+              <div class="bubble user">Can you make it less stressful?</div>
+              <div class="bubble">Yes. Keep each block to 25 minutes and put the hardest topic first while your focus is fresh.</div>
+              <div class="input-row">
+                <input value="Explain mitosis simply" aria-label="Study tutor demo prompt">
+                <button class="btn primary" data-toast="Study Tutor generated a mock explanation.">Ask tutor</button>
+              </div>
+            </article>
+            <aside class="panel">
+              <h3>What this feature includes</h3>
+              <div class="preview-list">
+                <div class="preview-row"><b>Study plans</b><p>Daily and weekly schedules around deadlines.</p></div>
+                <div class="preview-row"><b>Simple explanations</b><p>Concept breakdowns for quick review.</p></div>
+                <div class="preview-row"><b>Focus coaching</b><p>Suggested breaks, priority order, and lighter days.</p></div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="view" id="workoutPlanner">
+          <div class="view-head">
+            <div>
+              <span class="tag live">Workout Planner</span>
+              <h2>Preview a student-friendly training plan.</h2>
+              <p>The planner fits workouts around study load, energy, and recovery.</p>
+            </div>
+            <button class="btn" data-view-button="featuresApp">Back to features</button>
+          </div>
+          <div class="preview-grid">
+            <article class="panel">
+              <h3>This week's plan</h3>
+              <div class="plan-list">
+                <div class="plan-item"><span class="check">1</span><div><b>Push day</b><p>Bench press, shoulder press, tricep extensions. 3 sets each.</p></div><span class="tag">45 min</span></div>
+                <div class="plan-item"><span class="check">2</span><div><b>Pull day</b><p>Rows, pulldowns, curls, rear delts. Moderate intensity.</p></div><span class="tag">40 min</span></div>
+                <div class="plan-item"><span class="check">3</span><div><b>Leg day</b><p>Squats, RDLs, lunges, calves. Keep one rep in reserve.</p></div><span class="tag">50 min</span></div>
+              </div>
+            </article>
+            <aside class="panel">
+              <h3>Coach note</h3>
+              <p>Your hardest study day is Thursday, so the mock planner keeps that as a recovery day.</p>
+              <button class="btn primary full" data-toast="Workout Planner generated a lighter exam-week split.">Generate exam-week split</button>
+            </aside>
+          </div>
+        </section>
+
+        <section class="view" id="mealSuggestions">
+          <div class="view-head">
+            <div>
+              <span class="tag live">Meal Suggestions</span>
+              <h2>Preview easy meals for focus and recovery.</h2>
+              <p>Meal ideas are intentionally simple so students can actually follow them.</p>
+            </div>
+            <button class="btn" data-view-button="featuresApp">Back to features</button>
+          </div>
+          <div class="preview-grid">
+            <article class="panel">
+              <h3>Today meal ideas</h3>
+              <div class="preview-list">
+                <div class="preview-row"><b>Breakfast</b><p>Oats, banana, peanut butter, and milk.</p></div>
+                <div class="preview-row"><b>Lunch</b><p>Chicken rice bowl with vegetables and water.</p></div>
+                <div class="preview-row"><b>Snack</b><p>Yogurt or fruit before a focus block.</p></div>
+                <div class="preview-row"><b>Dinner</b><p>Fish or tofu, sweet potato, and greens.</p></div>
+              </div>
+            </article>
+            <aside class="panel">
+              <h3>Pro upgrade preview</h3>
+              <p>Pro adds bulk, lean bulk, maintain, and budget-aware weekly meal plans.</p>
+              <button class="btn primary full" data-plan="pro">Unlock Pro meal planning</button>
+            </aside>
+          </div>
+        </section>
+
+        <section class="view" id="checkout">
+          <div class="view-head">
+            <div>
+              <span class="tag live">Payment section</span>
+              <h2 id="checkoutTitle">Subscribe to StudyFit Pro.</h2>
+              <p>All fields are prefilled for prototype navigation. No real payment is processed.</p>
+            </div>
+            <button class="btn" data-view-button="pricingApp">Back to pricing</button>
+          </div>
+          <div class="payment-grid">
+            <article class="panel">
+              <h3>Order summary</h3>
+              <div class="price" id="checkoutPrice">PHP 199 <small>/ mo</small></div>
+              <p id="checkoutSummary">Unlimited AI coaching, workout planning, and advanced meal plans.</p>
+              <div class="preview-list">
+                <div class="preview-row"><b>Billing date</b><p>Today, mock payment only</p></div>
+                <div class="preview-row"><b>Account</b><p>alex.student@studyfit.ai</p></div>
+                <div class="preview-row"><b>Status after payment</b><p>Subscribed and unlocked inside this prototype</p></div>
+              </div>
+            </article>
+            <form class="panel" id="paymentForm">
+              <h3>Payment method</h3>
+              <label class="payment-option"><input type="radio" name="pay" checked> GCash ending 1024</label>
+              <label class="payment-option"><input type="radio" name="pay"> Maya ending 8842</label>
+              <label class="payment-option"><input type="radio" name="pay"> Visa ending 4242</label>
+              <div class="field" style="margin-top:14px">
+                <label for="cardName">Name on account</label>
+                <input id="cardName" value="Alex Rivera">
+              </div>
+              <div class="field">
+                <label for="billingEmail">Billing email</label>
+                <input id="billingEmail" value="alex.student@studyfit.ai">
+              </div>
+              <button class="btn primary full" type="submit" id="payButton">Pay and subscribe</button>
+            </form>
+          </div>
+        </section>
+
+        <section class="view" id="profile">
+          <div class="view-head">
+            <div>
+              <span class="tag live">Profile</span>
+              <h2>Alex Rivera</h2>
+              <p>Mock student account with prefilled settings and recent activity.</p>
+            </div>
+            <button class="btn" data-toast="Profile editing is coming soon.">Edit profile</button>
+          </div>
+          <div class="profile-grid">
+            <article class="panel">
+              <h3>Account</h3>
+              <p><b>Email:</b> alex.student@studyfit.ai</p>
+              <p><b>Goal:</b> Improve grades while building a consistent gym routine.</p>
+              <p><b>Plan:</b> <span id="profilePlan">Free MVP Preview</span></p>
+              <button class="btn primary full" data-view-button="pricingApp">View plan options</button>
+            </article>
+            <article class="panel">
+              <h3>Recent activity</h3>
+              <div class="timeline">
+                <div class="timeline-item"><b>Today</b><p>Completed biology review and logged breakfast.</p></div>
+                <div class="timeline-item"><b>Yesterday</b><p>Generated a push workout and a lighter dinner plan.</p></div>
+                <div class="timeline-item"><b>This week</b><p>Kept a 5-day focus streak.</p></div>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <b>Prototype action</b>
+    <p id="toastText">This control is wired for mock navigation.</p>
+  </div>
+
+  <script>
+    const landingScreen = document.getElementById("landingScreen");
+    const loginScreen = document.getElementById("loginScreen");
+    const appScreen = document.getElementById("appScreen");
+    const sidebar = document.getElementById("sidebar");
+    const drawerOverlay = document.getElementById("drawerOverlay");
+    const toast = document.getElementById("toast");
+    const toastText = document.getElementById("toastText");
+    const planBadge = document.getElementById("planBadge");
+    const profilePlan = document.getElementById("profilePlan");
+    const checkoutTitle = document.getElementById("checkoutTitle");
+    const checkoutPrice = document.getElementById("checkoutPrice");
+    const checkoutSummary = document.getElementById("checkoutSummary");
+    const payButton = document.getElementById("payButton");
+    const paymentForm = document.getElementById("paymentForm");
+    const planDetails = {
+      free: {
+        name: "Free MVP Preview",
+        price: "PHP 0",
+        summary: "Core dashboard, limited AI tutor messages, and basic meal ideas."
+      },
+      pro: {
+        name: "StudyFit Pro",
+        price: "PHP 199",
+        summary: "Unlimited AI coaching, workout planning, habit streaks, and advanced meal plans."
+      },
+      premium: {
+        name: "StudyFit Premium",
+        price: "PHP 399",
+        summary: "Everything in Pro plus progress insights, weekly AI reviews, and form review tools."
+      }
+    };
+    let selectedPlan = "pro";
+    let currentPlan = "free";
+    let toastTimer;
+
+    function showOnly(screen) {
+      [landingScreen, loginScreen, appScreen].forEach(item => item.classList.add("hidden"));
+      screen.classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function showToast(message) {
+      toastText.textContent = message || "This is a mock prototype action.";
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
+    }
+
+    function closeDrawer() {
+      sidebar.classList.remove("open");
+      drawerOverlay.classList.remove("show");
+    }
+
+    function switchView(viewId) {
+      document.querySelectorAll(".view").forEach(view => view.classList.toggle("active", view.id === viewId));
+      document.querySelectorAll("[data-view-button]").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.viewButton === viewId);
+      });
+      closeDrawer();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderPlanState() {
+      const plan = planDetails[currentPlan];
+      planBadge.textContent = plan.name;
+      planBadge.className = "tag live";
+      profilePlan.textContent = plan.name;
+      document.querySelectorAll("[data-plan]").forEach(btn => {
+        const isCurrent = btn.dataset.plan === currentPlan;
+        btn.disabled = isCurrent;
+        if (isCurrent) {
+          btn.textContent = "Subscribed";
+        } else if (btn.dataset.plan === "pro") {
+          btn.textContent = btn.closest("#mealSuggestions") ? "Unlock Pro meal planning" : "Preview Pro";
+        } else if (btn.dataset.plan === "premium") {
+          btn.textContent = "Preview Premium";
+        }
+      });
+    }
+
+    function openFeature(featureId) {
+      switchView(featureId);
+      const label = {
+        studyTutor: "AI Study Tutor",
+        workoutPlanner: "Workout Planner",
+        mealSuggestions: "Meal Suggestions"
+      }[featureId] || "Feature";
+      showToast(`${label} preview opened.`);
+    }
+
+    function openCheckout(planKey) {
+      selectedPlan = planKey;
+      const plan = planDetails[planKey];
+      showOnly(appScreen);
+      checkoutTitle.textContent = `Subscribe to ${plan.name}.`;
+      checkoutPrice.innerHTML = `${plan.price} <small>/ mo</small>`;
+      checkoutSummary.textContent = plan.summary;
+      payButton.textContent = `Pay ${plan.price} and subscribe`;
+      switchView("checkout");
+      showToast(`${plan.name} checkout is ready with prefilled demo payment details.`);
+    }
+
+    document.querySelectorAll("[data-open-login]").forEach(btn => {
+      btn.addEventListener("click", () => showOnly(loginScreen));
+    });
+
+    document.querySelectorAll("[data-back-home]").forEach(btn => {
+      btn.addEventListener("click", () => showOnly(landingScreen));
+    });
+
+    document.querySelectorAll("[data-go]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        showOnly(landingScreen);
+        document.getElementById(btn.dataset.go)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
+    document.getElementById("loginForm").addEventListener("submit", event => {
+      event.preventDefault();
+      showOnly(appScreen);
+      switchView("dashboard");
+      showToast("Signed in with prefilled demo credentials.");
+    });
+
+    document.getElementById("menuBtn").addEventListener("click", () => {
+      sidebar.classList.add("open");
+      drawerOverlay.classList.add("show");
+    });
+    drawerOverlay.addEventListener("click", closeDrawer);
+
+    document.querySelectorAll("[data-view-button]").forEach(btn => {
+      btn.addEventListener("click", () => switchView(btn.dataset.viewButton));
+    });
+
+    document.querySelectorAll("[data-open-feature]").forEach(btn => {
+      btn.addEventListener("click", () => openFeature(btn.dataset.openFeature));
+    });
+
+    document.querySelectorAll("[data-feature]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        switchView("featuresApp");
+        showToast(`${btn.dataset.feature} is available soon in the full product.`);
+      });
+    });
+
+    document.querySelectorAll("[data-plan]").forEach(btn => {
+      btn.addEventListener("click", () => openCheckout(btn.dataset.plan));
+    });
+
+    document.querySelectorAll("[data-toast]").forEach(btn => {
+      btn.addEventListener("click", () => showToast(btn.dataset.toast));
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") closeDrawer();
+    });
+
+    paymentForm.addEventListener("submit", event => {
+      event.preventDefault();
+      currentPlan = selectedPlan;
+      renderPlanState();
+      switchView("dashboard");
+      showToast(`Payment complete. You are now subscribed to ${planDetails[currentPlan].name}.`);
+    });
+
+    renderPlanState();
+  </script>
+</body>
+</html>
